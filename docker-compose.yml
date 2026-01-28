@@ -8,3 +8,5 @@ services:
       - "9090:9090"
     env_file:
       - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
