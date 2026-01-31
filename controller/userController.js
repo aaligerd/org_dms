@@ -29,10 +29,10 @@ const getAllUsers = async (req, res) => {
 */
 const addUser = async (req, res) => {
     /** @type {{org_name:String}} */
-    const { user_name,user_mail,user_emp_code } = req.body;
+    const { user_name,user_mail,user_emp_code,org_id,dept_id } = req.body;
     const insertUserQ = `
-        INSERT INTO tbl_user (user_name, user_mail, user_emp_code)
-        VALUES ($1, $2, $3)
+        INSERT INTO tbl_user (user_name, user_mail, user_emp_code,org_id,dept_id)
+        VALUES ($1, $2, $3,$4,$5)
         RETURNING user_id;
     `;
     const createLoginQ = `
@@ -44,7 +44,7 @@ const addUser = async (req, res) => {
         const userResult = await pgClient.query(insertUserQ, [
             user_name,
             user_mail,
-            user_emp_code,
+            user_emp_code,org_id,dept_id
         ]);
         const user_id = userResult.rows[0].user_id;
         const hashedPassword = await hashPassword(basic_password);
@@ -62,8 +62,7 @@ const addUser = async (req, res) => {
         await pgClient.query('ROLLBACK');
         console.error(error);
         return res.status(500).send({
-            msg: 'Error creating user',
-            error: error.detail || error.message,
+            msg: 'Error creating user '+error.detail || error.message,
         });
     }
 }

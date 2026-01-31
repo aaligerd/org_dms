@@ -1,8 +1,11 @@
+version: "3.9"
+
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: dms_backend
     restart: unless-stopped
     ports:
       - "9090:9090"
@@ -10,3 +13,5 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    volumes:
+      - "C:/Users/subhradip.majumder/Desktop/projects/projects/eisamay_dms/backend/uploads:/app/uploads"
