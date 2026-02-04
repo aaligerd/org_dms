@@ -58,8 +58,6 @@ const loginEmployee = async (req, res) => {
         message: "Invalid email or password"
       });
     }
-
-    console.log(user);
     /* ---------------------------------------------
        3️⃣ Success response
     --------------------------------------------- */
