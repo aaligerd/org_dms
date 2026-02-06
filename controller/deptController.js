@@ -1,4 +1,5 @@
 const pgClient = require('../db/pgClient');
+const {createAdminLog } = require('../utils/logWriter');
 
 /**
 * @param {import('express').Request} req
@@ -24,13 +25,14 @@ const getAllDept = async (req, res) => {
 */
 const addDept = async (req, res) => {
     /** @type {{dept_name:String}} */
-    const { dept_name } = req.body;
+    const { dept_name,user="TEST9999" } = req.body;
     const insertQ = "insert into tbl_dept(dept_name) values ($1);";
     try {
         const { rows, rowCount } = await pgClient.query(insertQ, [dept_name.toUpperCase()]);
         if (rowCount === 0) {
             return res.status(500).send({ msg: "Undable to add department." });
         } else {
+            createAdminLog(`Department Added - ${dept_name}`,user);
             return res.status(200).send({ msg: "Department added." });
         }
 

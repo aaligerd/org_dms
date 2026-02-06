@@ -20,7 +20,7 @@ const upload=multer({storage});
 // employeeRouter.get('/', getAllDept);
 employeeRouter.post('/add',upload.any(),addEmployee);
 employeeRouter.get('/search',searchEmployee);
-employeeRouter.get('/:emp_id',getEmployeeById);
+employeeRouter.get('/:emp_id/:org_id',getEmployeeById);
 employeeRouter.put('/update/:emp_org_id',upload.any(),updateEmployee );
 
 module.exports = employeeRouter;

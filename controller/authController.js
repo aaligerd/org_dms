@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const pgClient = require("../db/pgClient");
 const { verifyPassword, hashPassword } = require("../utils/bcryptUtil");
+const { default: createAdminLog } = require("../utils/logWriter");
 const basic_password=process.env.USERDEFAULT_PASS;
 
 /**
@@ -89,7 +90,7 @@ const loginEmployee = async (req, res) => {
  */
 const resetPasswordByEmpid = async (req, res) => {
   try {
-    const { password, user_emp_id } = req.body;
+    const { password, user_emp_id,user='TEST9999' } = req.body;
 
     if (!password || !user_emp_id) {
       return res.status(400).json({
@@ -142,6 +143,7 @@ const resetPasswordByEmpid = async (req, res) => {
     /* ---------------------------------------------
        4️⃣ Success
     --------------------------------------------- */
+    createAdminLog(`Password Reset ID: ${user_emp_id}`,user);
     return res.json({
       success: true,
       message: "Password reset successful"
@@ -164,7 +166,7 @@ const resetPasswordByEmpid = async (req, res) => {
  */
 const resetToBasic = async (req, res) => {
   /** @type {{user_id: string}} */
-  const { user_id } = req.body;
+  const { user_id,user="TEST9999"} = req.body;
 
   try {
     if (!user_id) {
@@ -209,6 +211,7 @@ const resetToBasic = async (req, res) => {
     /* -----------------------------------
        3️⃣ Success
     ----------------------------------- */
+    createAdminLog(`Password reset ID: ${user_id}`,user);
     return res.json({
       success: true,
       message: "Password reset to default successfully"

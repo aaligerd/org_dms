@@ -1,4 +1,5 @@
 const pgClient = require('../db/pgClient');
+const {createAdminLog} = require('../utils/logWriter');
 
 /**
 * @param {import('express').Request} req
@@ -31,6 +32,7 @@ const addOrg = async (req, res) => {
         if (rowCount === 0) {
             return res.status(500).send({ msg: "Undable to add organisation." });
         } else {
+            createAdminLog(`Department Added - ${dept_name}`,user);
             return res.status(200).send({ msg: "Organisation added." });
         }
 

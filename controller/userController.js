@@ -1,6 +1,6 @@
 const pgClient = require('../db/pgClient');
 const dotenv=require('dotenv').config();
-
+const {createAdminLog}=require('../utils/logWriter.js')
 const basic_password=process.env.USERDEFAULT_PASS;
 const { hashPassword } = require('../utils/bcryptUtil');
 
@@ -29,7 +29,7 @@ const getAllUsers = async (req, res) => {
 */
 const addUser = async (req, res) => {
     /** @type {{org_name:String}} */
-    const { user_name,user_mail,user_emp_code,org_id,dept_id } = req.body;
+    const { user_name,user_mail,user_emp_code,org_id,dept_id,user="TEST9999" } = req.body;
     const insertUserQ = `
         INSERT INTO tbl_user (user_name, user_mail, user_emp_code,org_id,dept_id)
         VALUES ($1, $2, $3,$4,$5)
@@ -53,6 +53,7 @@ const addUser = async (req, res) => {
             hashedPassword,
         ]);
         await pgClient.query('COMMIT');
+        createAdminLog(`New user created ID: ${user_id}`,user);
         return res.status(201).send({
             msg: 'User created successfully',
             user_id,
