@@ -46,6 +46,8 @@ app.use('/s4/api/v1/dept',require('./router/deptRouter'));
 app.use('/s4/api/v1/user',require('./router/userRouter'));
 app.use('/s4/api/v1/employee',require('./router/employeeRouter'));
 app.use('/s4/api/v1/auth',require('./router/authRouter'));
+app.use('/s4/api/v1/requisition',require('./router/requisitionRouter'));
+app.use('/s4/api/v1/candidate',require('./router/candidateRouter'));
 
 app.listen(port,()=>{
 console.log(`Server running: http://localhost:${port}/`);
