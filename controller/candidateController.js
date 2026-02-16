@@ -24,8 +24,8 @@ try{
     const {rowCount}=await pgClient.query(insertQ,[tempToken,validUpto,email,position_id]);
     if(rowCount===1){
         //send mail
-        const mail_response=await sendSignupLinkMail(email,getReqRole,tempToken,validUpto);
-        console.log(mail_response);
+        // const mail_response=await sendSignupLinkMail(email,getReqRole,tempToken,validUpto);
+        // console.log(mail_response);
         return res.status(200).send({msg:"Mail Send to candidate."});
     }
     return res.status(200).send({msg:"Mail send"});
