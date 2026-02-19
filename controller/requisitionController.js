@@ -131,7 +131,7 @@ const getRequisitionById = async (req, res) => {
 const updateRequisitionById = async (req, res) => {
     /** @type {{req_pos_title:String,req_org:String,req_dept:String,req_reqst_by:String,req_person_need:Number,req_reason:String,req_brif:String,req_status:String,req_id:Number}} */
     let { req_pos_title, req_org, req_dept, req_reqst_by, req_person_need, req_reason, req_brif, req_status, req_id } = req.body;
-    if (!req_id || req_id <= 1000 || !req_pos_title || req_pos_title.trim().length === 0 || !req_org || !req_dept || !req_reqst_by || req_reqst_by.trim().length === 0 || !req_person_need || req_person_need.trim().length === 0 || !req_status || req_status.trim().length == 0) {
+    if (!req_id || req_id <= 1000 || !req_pos_title || req_pos_title.trim().length === 0 || !req_org || !req_dept || !req_reqst_by || req_reqst_by.trim().length === 0 || !req_person_need || !req_status || req_status.trim().length == 0) {
         return res.status(500).send({ msg: "Mandetory fields needed." });
     }
 
